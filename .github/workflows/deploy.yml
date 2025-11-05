@@ -10,6 +10,9 @@ env:
   AZURE_RESOURCE_GROUP: gh-demo
   AZURE_CONTAINER_REGISTRY: acrghdemorlacf
 
+permissions:
+  id-token: write
+  contents: read
 
 jobs:
   build-and-deploy:
