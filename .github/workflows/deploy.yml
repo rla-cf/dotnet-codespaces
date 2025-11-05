@@ -53,30 +53,30 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build and push Docker image to ACR-backend
+
+      - name: Build and push Docker image to ACR - BackEnd
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/backend:latest, ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/backend:${{ github.sha }}
-          file: SampleApp/Backend/Dockerfile
+          file: SampleApp/BackEnd/Dockerfile
 
-
-      - name: Build and push Docker image to ACR-frontend
+      - name: Build and push Docker image to ACR - FrontEnd
         uses: docker/build-push-action@v4
         with:
           push: true
           tags: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/frontend:latest, ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/frontend:${{ github.sha }}
-          file: SampleApp/Frontend/Dockerfile
+          file: SampleApp/FrontEnd/Dockerfile
 
 
-      - name: Deploy to Azure Container Apps
+      - name: Deploy to Azure Container Apps - BackEnd
         uses: azure/container-apps-deploy-action@v1
         with:
             resourceGroup: ${{ env.AZURE_RESOURCE_GROUP }}
             containerAppName: backend
             imageToDeploy: ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/backend:latest
 
-      - name: Deploy to Azure Container Apps
+      - name: Deploy to Azure Container Apps - FrontEnd
         uses: azure/container-apps-deploy-action@v1
         with:
             resourceGroup: ${{ env.AZURE_RESOURCE_GROUP }}
